@@ -8,6 +8,8 @@ import { demoFlags, escapeHtml } from "./util.js"
  *   ```garden-graph```   (flag: memory-graph)  your visits drawn on the garden's graph
  *   ```garden-trail```   (flag: trail)         your route through the garden
  *   ```puzzle```         (flag: puzzle)        clues whose answers spell a password
+ *   ```scrolly```        (flag: scrolly)       sticky figure for the `[!step]` callouts that follow;
+ *                                              the block's content names the figure
  *
  * Puzzle syntax: an optional `door: <slug>` line, then one clue per item, `clue | answer, alias`.
  * Only salted hashes of the answers are published.
@@ -16,6 +18,10 @@ const widgets = {
   "garden-graph": { flag: "memory-graph", render: () => mount("graph") },
   "garden-trail": { flag: "trail", render: () => mount("trail") },
   puzzle: { flag: "puzzle", render: renderPuzzle },
+  scrolly: {
+    flag: "scrolly",
+    render: (source) => `<div class="sc-scrolly" data-figure="${escapeHtml(source.trim())}"></div>`,
+  },
 }
 
 export function remarkWidgets() {

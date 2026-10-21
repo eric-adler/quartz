@@ -1,0 +1,72 @@
+/* Reactive document: draggable numbers and the values that follow them. */
+.sc-num {
+  position: relative;
+  padding: 0 0.2em;
+  border-bottom: 2px dotted var(--secondary);
+  border-radius: 3px;
+  color: var(--secondary);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+.sc-num:hover,
+.sc-num:focus-visible,
+.sc-num.dragging {
+  background: color-mix(in srgb, var(--secondary) 14%, transparent);
+}
+
+/* a hint of where the value sits in its range */
+.sc-num::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: calc(var(--fill, 0.5) * 100%);
+  height: 2px;
+  background: var(--secondary);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.sc-num:is(:hover, :focus-visible, .dragging)::after {
+  opacity: 1;
+}
+
+html.sc-dragging,
+html.sc-dragging * {
+  cursor: ew-resize !important;
+}
+
+.sc-out,
+.sc-case {
+  padding: 0 0.15em;
+  border-radius: 3px;
+  color: var(--dark);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-changed {
+  animation: sc-changed 0.7s var(--sc-ease);
+}
+
+@keyframes sc-changed {
+  from {
+    background-color: color-mix(in srgb, var(--tertiary) 40%, transparent);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-changed {
+    animation: none;
+  }
+}

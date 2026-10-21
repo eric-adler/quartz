@@ -1,0 +1,110 @@
+/* Read aloud: the player pill and what's being read. */
+.sc-reader {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 1rem 0 1.5rem;
+  padding: 0.35rem 0.45rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--light) 94%, transparent);
+  box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(10px);
+  font-size: 0.85rem;
+}
+
+.sc-reader button,
+.sc-reader select {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  color: var(--dark);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sc-reader button:hover,
+.sc-reader select:hover {
+  background: color-mix(in srgb, var(--darkgray) 10%, transparent);
+}
+
+.sc-reader select {
+  max-width: 11rem;
+  font-weight: 400;
+}
+
+.sc-reader .sc-reader-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--secondary);
+  color: var(--light);
+}
+
+.sc-reader .sc-reader-play:hover {
+  background: var(--secondary);
+  filter: brightness(1.1);
+}
+
+.sc-reader-icon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.4rem 0 0.4rem 0.65rem;
+  border-color: transparent transparent transparent currentColor;
+}
+
+.sc-reader[data-state="playing"] .sc-reader-icon {
+  width: 0.6rem;
+  height: 0.8rem;
+  border-width: 0 0.2rem;
+  border-color: currentColor;
+}
+
+.sc-reader-pos {
+  font-family: var(--codeFont);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--gray);
+}
+
+.sc-reader-pos:empty {
+  display: none;
+}
+
+.sc-reader-note {
+  flex-basis: 100%;
+  margin: 0 0.6rem 0.2rem;
+  font-size: 0.75rem;
+  color: var(--gray);
+}
+
+.sc-reader-active :is(p, li, h2, h3, h4) {
+  cursor: pointer;
+  transition:
+    opacity 0.4s,
+    color 0.4s;
+}
+
+.sc-reader-active :is(p, li, h2, h3, h4):not(.sc-reading) {
+  opacity: 0.5;
+}
+
+.sc-reading {
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--secondary) 6%, transparent);
+  box-shadow: 0 0 0 0.4rem color-mix(in srgb, var(--secondary) 6%, transparent);
+}
+
+::highlight(sc-word) {
+  background-color: color-mix(in srgb, var(--secondary) 35%, transparent);
+  color: var(--dark);
+}

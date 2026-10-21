@@ -22,11 +22,14 @@ Each experiment is switched on per page, so the rest of the site stays ordinary.
 - [[flashcards|Flashcards]]: any note's highlights become a quiz.
 - [[puzzle-lock|The barista's lock]]: four clues spell the password to a hidden page.
 
+## Media and explorables
+
+- [[video-notes|Annotated video]]: notes that appear in time with a YouTube video, plus your own.
+- [[scrollytelling|Scrollytelling]]: a chart that changes as you scroll through the story.
+- [[reactive-document|Reactive document]]: numbers in the text that you can drag, and everything recalculates.
+- [[case-study|Annotated case study]]: comment pins on images and a before/after slider.
+- [[read-aloud|Read aloud]]: a page that reads itself and highlights each word as it goes.
+
 ## Later
 
-- **Video annotations**: notes that appear in time with a YouTube video.
-- **Scrollytelling**: a diagram that changes as you scroll.
-- **Reactive document**: numbers in a sentence that you can drag.
-- **Annotated case study**: comment pins on images and a before/after slider.
-- **Read aloud**: a page that reads itself and highlights each word as it goes.
 - **Shader showcase**, a **hover lab** of 25 shader link effects, **morphing page transitions** and a **semantic map** of the garden.

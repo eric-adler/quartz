@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" width="960" height="600">
+<rect width="960" height="600" fill="#1d2420"/>
+<rect x="14" y="14" width="932" height="572" fill="none" stroke="#6b5a3e" stroke-width="10"/>
+<text x="250" y="78" font-family="Georgia, serif" font-size="46" fill="#f4f0e6" font-style="italic">Café</text>
+<text x="370" y="78" font-family="Impact, Arial Black, sans-serif" font-size="50" fill="#f2d35b">MENU</text>
+<text x="520" y="78" font-family="Comic Sans MS, Chalkboard, cursive" font-size="34" fill="#f39ab5">~ coffee ~</text>
+<g font-family="Courier New, monospace" font-size="17" fill="#e9e4d8">
+<text x="300" y="118" fill="#f2d35b">S</text><text x="370" y="118" fill="#f2d35b">M</text><text x="440" y="118" fill="#f2d35b">L</text>
+<text x="60" y="145" fill="#f2d35b">Espresso</text><text x="190" y="145" fill="#8d8a7f">.........</text><text x="290" y="145">2.20</text><text x="360" y="145">2.60</text><text x="430" y="145">3.00</text>
+<text x="60" y="174" fill="#e9e4d8">Doppio</text><text x="190" y="174" fill="#8d8a7f">.........</text><text x="290" y="174">2.80</text><text x="360" y="174">—</text><text x="430" y="174">—</text>
+<text x="60" y="203" fill="#e9e4d8">Americano</text><text x="190" y="203" fill="#8d8a7f">.........</text><text x="290" y="203">2.60</text><text x="360" y="203">3.00</text><text x="430" y="203">3.40</text>
+<text x="60" y="232" fill="#f2d35b">Long black</text><text x="190" y="232" fill="#8d8a7f">.........</text><text x="290" y="232">2.70</text><text x="360" y="232">3.10</text><text x="430" y="232">—</text>
+<text x="60" y="261" fill="#e9e4d8">Macchiato</text><text x="190" y="261" fill="#8d8a7f">.........</text><text x="290" y="261">2.60</text><text x="360" y="261">3.00</text><text x="430" y="261">—</text>
+<text x="60" y="290" fill="#e9e4d8">Cortado</text><text x="190" y="290" fill="#8d8a7f">.........</text><text x="290" y="290">2.90</text><text x="360" y="290">3.30</text><text x="430" y="290">—</text>
+<text x="60" y="319" fill="#f2d35b">Flat white</text><text x="190" y="319" fill="#8d8a7f">.........</text><text x="290" y="319">3.20</text><text x="360" y="319">3.60</text><text x="430" y="319">4.00</text>
+<text x="60" y="348" fill="#e9e4d8">Cappuccino</text><text x="190" y="348" fill="#8d8a7f">.........</text><text x="290" y="348">3.10</text><text x="360" y="348">3.50</text><text x="430" y="348">3.90</text>
+<text x="60" y="377" fill="#e9e4d8">Latte</text><text x="190" y="377" fill="#8d8a7f">.........</text><text x="290" y="377">3.20</text><text x="360" y="377">3.60</text><text x="430" y="377">4.00</text>
+<text x="60" y="406" fill="#f2d35b">Mocha</text><text x="190" y="406" fill="#8d8a7f">.........</text><text x="290" y="406">3.50</text><text x="360" y="406">3.90</text><text x="430" y="406">4.30</text>
+<text x="60" y="435" fill="#e9e4d8">Filter</text><text x="190" y="435" fill="#8d8a7f">.........</text><text x="290" y="435">2.80</text><text x="360" y="435">3.20</text><text x="430" y="435">3.60</text>
+<text x="60" y="464" fill="#e9e4d8">Batch brew</text><text x="190" y="464" fill="#8d8a7f">.........</text><text x="290" y="464">2.40</text><text x="360" y="464">2.80</text><text x="430" y="464">3.20</text>
+<text x="60" y="493" fill="#f2d35b">Cold brew</text><text x="190" y="493" fill="#8d8a7f">.........</text><text x="290" y="493">3.40</text><text x="360" y="493">3.80</text><text x="430" y="493">4.20</text>
+<text x="60" y="522" fill="#e9e4d8">Hot choc.</text><text x="190" y="522" fill="#8d8a7f">.........</text><text x="290" y="522">3.00</text><text x="360" y="522">3.40</text><text x="430" y="522">3.80</text>
+</g>
+<g transform="translate(700 150) rotate(-9)"><text font-family="Comic Sans MS, Chalkboard, cursive" font-size="30" fill="#f39ab5" text-anchor="middle">Filter of the day!!!</text>
+<text y="36" font-family="Comic Sans MS, Chalkboard, cursive" font-size="20" fill="#f39ab5" text-anchor="middle">ask us what it is :)</text></g>
+<g transform="translate(860 255)"><polygon points="0,-48 12,-16 46,-18 18,4 30,38 0,16 -30,38 -18,4 -46,-18 -12,-16" fill="#f2d35b"/><text y="8" font-family="Impact, Arial Black, sans-serif" font-size="20" fill="#1d2420" text-anchor="middle">NEW!</text></g>
+<g font-family="Courier New, monospace" font-size="16" fill="#e9e4d8">
+<text x="560" y="300" fill="#f2d35b">ASK ABOUT OUR SYRUPS</text>
+<text x="560" y="330">Oat +0.40   Soy +0.40</text>
+<text x="560" y="354">Almond +0.50  Coconut +0.50</text>
+<text x="560" y="386">Extra shot ......... +0.60</text>
+<text x="560" y="410">Decaf available*</text>
+<text x="560" y="452" font-size="13" fill="#8d8a7f">*please ask staff</text>
+<text x="560" y="500" font-size="15" fill="#f39ab5">Cash &amp; card. No large notes pls</text>
+<text x="560" y="528" font-size="15">WiFi: ask at counter</text>
+</g></svg>

@@ -1,0 +1,229 @@
+/* Scrollytelling: sticky figure beside a column of steps. */
+.sc-scrolly {
+  display: grid;
+  gap: 1rem 2rem;
+  margin: 2rem 0;
+}
+
+.sc-scrolly-figure {
+  position: sticky;
+  top: 1rem;
+  z-index: 1;
+  align-self: start;
+  padding: 0.75rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 16px;
+  background: var(--light);
+}
+
+.sc-scrolly-steps {
+  display: grid;
+  gap: 45vh;
+  padding: 10vh 0 35vh;
+}
+
+.sc-step {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 14px;
+  background: var(--light);
+  opacity: 0.4;
+  transition:
+    opacity 0.4s,
+    border-color 0.4s,
+    box-shadow 0.4s;
+}
+
+.sc-step.active {
+  border-color: color-mix(in srgb, var(--secondary) 50%, transparent);
+  box-shadow: 0 14px 40px -24px rgb(0 0 0 / 0.45);
+  opacity: 1;
+}
+
+.sc-step > :first-child {
+  margin-top: 0;
+}
+
+.sc-step > :last-child {
+  margin-bottom: 0;
+}
+
+.sc-step-title {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  color: var(--dark);
+}
+
+@media (min-width: 1000px) {
+  .sc-scrolly {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  }
+
+  .sc-scrolly-figure {
+    top: 18vh;
+  }
+
+  .sc-scrolly-steps {
+    padding-top: 30vh;
+  }
+}
+
+@media (max-width: 999px) {
+  .sc-step {
+    position: relative;
+    z-index: 2;
+    background: color-mix(in srgb, var(--light) 94%, transparent);
+  }
+
+  .sc-scrolly-steps {
+    gap: 60vh;
+  }
+}
+
+/* extraction figure */
+.sc-fig {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--bodyFont);
+}
+
+.sc-fig .axes line {
+  stroke: var(--gray);
+  stroke-width: 1.5;
+}
+
+.sc-fig .axes text,
+.sc-fig .fig-note {
+  font-size: 14px;
+  fill: var(--darkgray);
+}
+
+.sc-fig .fig-note {
+  font-weight: 600;
+  fill: var(--secondary);
+}
+
+.sc-fig .zones {
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.sc-fig .zones.on {
+  opacity: 1;
+}
+
+.sc-fig .zone text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sc-fig .zone.sour rect {
+  fill: color-mix(in srgb, #d8b04a 14%, transparent);
+}
+
+.sc-fig .zone.sour text {
+  fill: #b38a22;
+}
+
+.sc-fig .zone.sweet rect {
+  fill: color-mix(in srgb, var(--tertiary) 18%, transparent);
+}
+
+.sc-fig .zone.sweet text {
+  fill: color-mix(in srgb, var(--tertiary) 80%, var(--dark));
+}
+
+.sc-fig .zone.bitter rect {
+  fill: color-mix(in srgb, #8a5a3c 18%, transparent);
+}
+
+.sc-fig .zone.bitter text {
+  fill: #a06a45;
+}
+
+.sc-fig .curve path {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1s var(--sc-ease);
+}
+
+.sc-fig .curve.on path {
+  stroke-dashoffset: 0;
+}
+
+.sc-fig .curve-label {
+  font-size: 15px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: var(--light);
+  stroke-width: 4px;
+  opacity: 0;
+  transition: opacity 0.5s 0.5s;
+}
+
+.sc-fig .curve.on .curve-label {
+  opacity: 1;
+}
+
+.sc-fig .curve.acids path {
+  stroke: #d8a93a;
+}
+
+.sc-fig .curve.acids .curve-label {
+  fill: #c0901f;
+}
+
+.sc-fig .curve.sugars path {
+  stroke: var(--tertiary);
+}
+
+.sc-fig .curve.sugars .curve-label {
+  fill: color-mix(in srgb, var(--tertiary) 80%, var(--dark));
+}
+
+.sc-fig .curve.bitter path {
+  stroke: #8a5a3c;
+}
+
+.sc-fig .curve.bitter .curve-label {
+  fill: #a06a45;
+}
+
+.sc-fig .cup {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.sc-fig .cup.on {
+  opacity: 1;
+}
+
+.sc-fig .cup line {
+  stroke: var(--dark);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.sc-fig .cup circle {
+  fill: var(--dark);
+  stroke: var(--light);
+  stroke-width: 3;
+}
+
+.sc-fig .cup text {
+  font-size: 15px;
+  font-weight: 700;
+  fill: var(--dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-fig .curve path {
+    transition: none;
+  }
+}

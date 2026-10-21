@@ -60,15 +60,15 @@ Status: ✅ built · 🔜 next phase · ⏳ later
 | 5   | Your path through the garden             | `trail`        | ✅ 2  |
 | 12  | Flashcards from any note                 | `cards`        | ✅ 2  |
 | 15  | Puzzle-locked page                       | `puzzle`       | ✅ 2  |
-| 4   | YouTube annotations                      | `video-notes`  | 🔜 3  |
-| 9   | Scrollytelling explainer                 | `scrolly`      | 🔜 3  |
-| 10  | Reactive document                        | `reactive`     | 🔜 3  |
-| 11  | Annotated case study                     | `case-study`   | 🔜 3  |
-| 17  | Read-aloud page                          | `read-aloud`   | 🔜 3  |
-| 6   | Shader showcase                          | `shaders`      | ⏳ 4  |
-| 7   | 25 shader link hovers                    | `hover-lab`    | ⏳ 4  |
-| 14  | Morphing page transitions                | `morph`        | ⏳ 4  |
-| 13  | Semantic map                             | `semantic-map` | ⏳ 4  |
+| 4   | YouTube annotations                      | `video-notes`  | ✅ 3  |
+| 9   | Scrollytelling explainer                 | `scrolly`      | ✅ 3  |
+| 10  | Reactive document                        | `reactive`     | ✅ 3  |
+| 11  | Annotated case study                     | `case-study`   | ✅ 3  |
+| 17  | Read-aloud page                          | `read-aloud`   | ✅ 3  |
+| 6   | Shader showcase                          | `shaders`      | 🔜 4  |
+| 7   | 25 shader link hovers                    | `hover-lab`    | 🔜 4  |
+| 14  | Morphing page transitions                | `morph`        | 🔜 4  |
+| 13  | Semantic map                             | `semantic-map` | 🔜 4  |
 
 ### 1 — Choose-your-own-depth
 
@@ -108,14 +108,15 @@ fade = not seen in a long time, unvisited = faint outline. A legend and "forget 
 YouTube IFrame Player API, polling `getCurrentTime()` (~4 Hz). Annotations authored as a list:
 
 ```md
-> [!video-notes] https://youtu.be/ID
+> [!video] https://youtu.be/ID
 >
 > - 00:42 Note shown at 42 s
 > - 01:30–01:55 Note with an end time
 ```
 
-Notes slide in beside the video, the list doubles as a clickable chapter index. Needs YouTube's embed,
-so a click-to-load consent placeholder is shown first.
+Notes slide in beside the video and float over it, the list and a marker timeline double as a
+clickable index, and readers can add their own notes at the current time (kept in reader memory).
+Uses YouTube's privacy-enhanced embed behind a click-to-load placeholder.
 
 ### 5 — Your path
 
@@ -145,21 +146,30 @@ note inline. Hovering a reference highlights its note and vice versa.
 
 ### 9 — Scrollytelling explainer
 
-Sticky SVG figure that morphs between states as text steps scroll past (IntersectionObserver).
-Steps authored as `> [!step|state-id]` callouts.
+A fenced ` ```scrolly ` block names a figure; the `> [!step|state]` callouts after it become the steps.
+The figure sticks beside the steps (above them on phones) and the step crossing the middle of the
+screen sets its state. Figures are small scripts registered by name; the first, `extraction`, shows
+acids, sugars and bitter compounds dissolving over time, with taste zones and grind size changing
+the pace.
 
 ### 10 — Reactive document
 
-Tangle-style numbers inside prose: drag to change, dependent numbers recompute.
+Tangle-style numbers inside prose, written as inline code: drag (or arrow-key) a number and
+everything computed from it updates. Values are also computed at build time for no-JS readers.
 
 ```md
-A `[dose: 18 g | 12..22]` dose at a `[ratio: 1:16 | 14..18]` ratio gives `{dose * ratio} g` of coffee.
+Brew `cups: 2 [1..6]` cups at 1:`ratio: 16 [12..20, 0.5]`, using `= cups * 250 / ratio | 1` g of coffee,
+which tastes `? ratio < 14.5: strong | ratio > 17.5: light | balanced`.
 ```
+
+The expression evaluator (`lib/expr.js`, no `eval`) is shared by the build and the browser.
 
 ### 11 — Annotated case study
 
-Image with numbered pins (Figma-comment style) whose notes sit in the margin; before/after slider;
-decisions transclude linked notes.
+`> [!pins] ![alt](image.svg)` puts numbered pins on an image, one note per line prefixed with its
+position (`48, 29: …`, percent from left and top). Pins and notes highlight each other; on narrow
+screens a pin shows its note in a bubble. `> [!compare] Before | After` with two images becomes a
+draggable before/after divider. Demo content is a fictional café menu redesign with generated SVGs.
 
 ### 12 — Flashcards
 

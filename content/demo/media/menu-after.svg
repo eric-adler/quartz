@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" width="960" height="600">
+<rect width="960" height="600" fill="#f5efe4"/>
+<text x="64" y="84" font-family="Georgia, serif" font-size="44" fill="#2a221c">Menu</text>
+<text x="66" y="112" font-family="Helvetica Neue, Arial, sans-serif" font-size="15" fill="#7d6f62">Roasted in-house, brewed to order</text>
+<line x1="64" y1="134" x2="896" y2="134" stroke="#d9cdbb" stroke-width="1.5"/>
+<text x="64" y="180" font-family="Helvetica Neue, Arial, sans-serif" font-size="13" letter-spacing="2.5" font-weight="700" fill="#8a5a3c">ESPRESSO</text>
+<line x1="64" y1="192" x2="296" y2="192" stroke="#8a5a3c" stroke-width="1.5"/>
+<text x="64" y="232" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Espresso</text>
+<text x="296" y="232" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">2.20</text>
+<text x="64" y="274" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Macchiato</text>
+<text x="296" y="274" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">2.60</text>
+<text x="64" y="316" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Cortado</text>
+<text x="296" y="316" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">2.90</text>
+<text x="64" y="358" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Americano</text>
+<text x="296" y="358" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">2.60</text>
+<text x="344" y="180" font-family="Helvetica Neue, Arial, sans-serif" font-size="13" letter-spacing="2.5" font-weight="700" fill="#8a5a3c">WITH MILK</text>
+<line x1="344" y1="192" x2="576" y2="192" stroke="#8a5a3c" stroke-width="1.5"/>
+<text x="344" y="232" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Flat white</text>
+<text x="576" y="232" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">3.20</text>
+<text x="344" y="274" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Cappuccino</text>
+<text x="576" y="274" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">3.10</text>
+<text x="344" y="316" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Latte</text>
+<text x="576" y="316" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">3.20</text>
+<text x="344" y="358" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Mocha</text>
+<text x="576" y="358" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">3.50</text>
+<text x="624" y="180" font-family="Helvetica Neue, Arial, sans-serif" font-size="13" letter-spacing="2.5" font-weight="700" fill="#8a5a3c">FILTER</text>
+<line x1="624" y1="192" x2="856" y2="192" stroke="#8a5a3c" stroke-width="1.5"/>
+<text x="624" y="232" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Batch brew</text>
+<text x="856" y="232" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">2.40</text>
+<text x="624" y="274" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Pour-over</text>
+<text x="856" y="274" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">3.20</text>
+<text x="624" y="316" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#2a221c">Cold brew</text>
+<text x="856" y="316" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#2a221c" text-anchor="end">3.40</text>
+<rect x="604" y="378" width="292" height="150" rx="14" fill="#2a221c"/>
+<text x="628" y="412" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" letter-spacing="2.5" font-weight="700" fill="#e3b787">THIS WEEK’S FILTER</text>
+<text x="628" y="448" font-family="Georgia, serif" font-size="25" fill="#f5efe4">Ethiopia, Yirgacheffe</text>
+<text x="628" y="476" font-family="Helvetica Neue, Arial, sans-serif" font-size="15" fill="#cdbfae">Washed · light roast</text>
+<text x="628" y="504" font-family="Helvetica Neue, Arial, sans-serif" font-size="15" fill="#cdbfae">Jasmine, bergamot, honey</text>
+<text x="872" y="504" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#f5efe4" text-anchor="end">4.20</text>
+<line x1="64" y1="548" x2="560" y2="548" stroke="#d9cdbb" stroke-width="1.5"/>
+<text x="64" y="574" font-family="Helvetica Neue, Arial, sans-serif" font-size="15" fill="#7d6f62">Large +0.50 · Extra shot +0.60 · Oat, soy or almond milk at no extra cost · Decaf on request</text>
+</svg>
