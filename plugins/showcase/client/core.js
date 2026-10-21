@@ -77,12 +77,30 @@ sc.canonicalSlug = (slug) => {
   return bare === "" || bare.endsWith("/") ? `${bare}index` : bare
 }
 
-/** URL path for a slug, resolved from the current page so it works under any base path. */
-sc.href = (slug) => {
-  const depth = sc.slug().split("/").length - 1
-  const root = new URL("../".repeat(depth) || "./", location.href)
-  return new URL(slug.replace(/(^|\/)index$/, "$1"), root).pathname
-}
+/** The site's root URL, resolved from the current page so it works under any base path. */
+sc.root = () => new URL("../".repeat(sc.slug().split("/").length - 1) || "./", location.href)
+
+/** URL path for a slug. */
+sc.href = (slug) => new URL(slug.replace(/(^|\/)index$/, "$1"), sc.root()).pathname
+
+/** Loads a heavy module from `lazy/` (bundled separately by the showcase-assets emitter). */
+sc.load = (name) => import(new URL(sc.lazyFiles[name], sc.root()).href)
+
+/** Mounts a lazy module's `mount(article)` on pages with `flag`; its return value is cleanup. */
+sc.onPageLazy = (flag, name) =>
+  sc.onPage(flag, (article) => {
+    let cancelled = false
+    let dispose = null
+    sc.load(name)
+      .then((module) => {
+        if (!cancelled) dispose = module.mount(article)
+      })
+      .catch((error) => console.error(`[showcase] couldn't load ${name}`, error))
+    return () => {
+      cancelled = true
+      dispose?.()
+    }
+  })
 
 sc.readingMinutes = (text = "") => Math.max(1, Math.round((text.match(/\S+/g)?.length ?? 0) / 230))
 

@@ -30,6 +30,9 @@ Each experiment is switched on per page, so the rest of the site stays ordinary.
 - [[case-study|Annotated case study]]: comment pins on images and a before/after slider.
 - [[read-aloud|Read aloud]]: a page that reads itself and highlights each word as it goes.
 
-## Later
+## Visuals
 
-- **Shader showcase**, a **hover lab** of 25 shader link effects, **morphing page transitions** and a **semantic map** of the garden.
+- [[shader-showcase|Shader showcase]]: full-screen GPU scenes behind the page, reacting to your cursor and scrolling.
+- [[hover-lab|Hover lab]]: twenty-five shader effects on link hovers.
+- [[page-transitions|Morphing page transitions]]: cards that grow into the page they open.
+- [[semantic-map|Semantic map]]: the garden arranged by meaning, with missing links suggested.

@@ -1,0 +1,247 @@
+/* Semantic map: notes by meaning, with cluster territories and neighbour arcs. */
+:root {
+  --sc-c0: #c47a3d;
+  --sc-c1: #5f8f6e;
+  --sc-c2: #b8963a;
+  --sc-c3: #7469a6;
+  --sc-c4: #b8565f;
+  --sc-c5: #4f86a8;
+}
+
+.sc-semantic {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--lightgray);
+  border-radius: 18px;
+  background: var(--light);
+}
+
+.sc-semantic-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--bodyFont);
+}
+
+.sc-semantic-svg .territories {
+  opacity: 0.22;
+}
+
+.sc-semantic-svg .cluster-label {
+  font-family: var(--codeFont);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-anchor: middle;
+  text-transform: uppercase;
+  paint-order: stroke;
+  stroke: var(--light);
+  stroke-width: 5px;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.sc-semantic-svg.focused .cluster-label {
+  opacity: 0.15;
+}
+
+.sc-semantic-svg .c0 {
+  fill: var(--sc-c0);
+  color: var(--sc-c0);
+}
+.sc-semantic-svg .c1 {
+  fill: var(--sc-c1);
+  color: var(--sc-c1);
+}
+.sc-semantic-svg .c2 {
+  fill: var(--sc-c2);
+  color: var(--sc-c2);
+}
+.sc-semantic-svg .c3 {
+  fill: var(--sc-c3);
+  color: var(--sc-c3);
+}
+.sc-semantic-svg .c4 {
+  fill: var(--sc-c4);
+  color: var(--sc-c4);
+}
+.sc-semantic-svg .c5 {
+  fill: var(--sc-c5);
+  color: var(--sc-c5);
+}
+
+.sc-semantic-svg .real-links line {
+  stroke: var(--gray);
+  stroke-width: 1;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.sc-semantic-svg.show-links .real-links line {
+  opacity: 0.55;
+}
+
+.sc-semantic-svg .neighbours path {
+  fill: none;
+  stroke: var(--secondary);
+  stroke-width: var(--w, 1.5);
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sc-draw 0.5s var(--sc-ease) forwards;
+}
+
+.sc-semantic-svg .neighbours .sim {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--secondary);
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: var(--light);
+  stroke-width: 4px;
+}
+
+.sc-semantic-svg .node {
+  cursor: pointer;
+  outline: none;
+  transition: opacity 0.25s;
+}
+
+.sc-semantic-svg .node .hit {
+  fill: transparent;
+}
+
+.sc-semantic-svg .node .dot {
+  fill: currentColor;
+  stroke: var(--light);
+  stroke-width: 2;
+}
+
+.sc-semantic-svg .node .dot.seen {
+  stroke: var(--dark);
+  stroke-width: 1.5;
+}
+
+.sc-semantic-svg .node .label {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--dark);
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: var(--light);
+  stroke-width: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.sc-semantic-svg.focused .node:not(.hot) {
+  opacity: 0.25;
+}
+
+.sc-semantic-svg .node.hot .label {
+  opacity: 1;
+}
+
+.sc-semantic-svg .node.self .dot {
+  stroke: var(--dark);
+  stroke-width: 3;
+}
+
+.sc-semantic-tip {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-width: 18rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  background: var(--dark);
+  color: var(--light);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  transform: translate(-50%, calc(-100% - 22px));
+  pointer-events: none;
+}
+
+.sc-semantic-tip[hidden] {
+  display: none;
+}
+
+.sc-semantic-tip span {
+  opacity: 0.75;
+}
+
+.sc-semantic-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+}
+
+.sc-semantic-method {
+  font-family: var(--codeFont);
+  font-size: 0.7rem;
+  color: var(--gray);
+}
+
+.sc-semantic-suggestions h3 {
+  margin-top: 1.75rem;
+}
+
+.sc-semantic-suggestions ol {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sc-semantic-suggestions li {
+  display: grid;
+  grid-template-columns: 1fr 7rem;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  border-radius: 10px;
+  transition: background-color 0.2s;
+}
+
+.sc-semantic-suggestions li:hover {
+  background: color-mix(in srgb, var(--secondary) 8%, transparent);
+}
+
+.sc-semantic-suggestions .pair {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: baseline;
+}
+
+.sc-semantic-suggestions .pair a {
+  background: none;
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.sc-semantic-suggestions .pair span {
+  color: var(--gray);
+}
+
+.sc-semantic-suggestions .bar {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--lightgray);
+}
+
+.sc-semantic-suggestions .bar > span {
+  display: block;
+  height: 100%;
+  background: var(--secondary);
+}

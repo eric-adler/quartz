@@ -1,0 +1,122 @@
+/* Morphing page transitions: the gallery cards and the view-transition choreography. */
+ul.sc-morph-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+ul.sc-morph-gallery > li {
+  margin: 0;
+}
+
+a.sc-morph-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  height: 100%;
+  overflow: hidden;
+  padding: 0 0 1rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 18px;
+  background: var(--light) !important;
+  color: var(--darkgray) !important;
+  font-weight: 400;
+  text-decoration: none;
+  transition:
+    transform 0.35s var(--sc-ease),
+    box-shadow 0.35s,
+    border-color 0.35s;
+}
+
+a.sc-morph-card:hover,
+a.sc-morph-card:focus-visible {
+  border-color: color-mix(in srgb, var(--secondary) 40%, transparent);
+  box-shadow: 0 22px 44px -26px rgb(0 0 0 / 0.55);
+  transform: translateY(-3px);
+}
+
+.sc-morph-art {
+  display: block;
+  height: 6.5rem;
+  margin-bottom: 0.6rem;
+  background:
+    radial-gradient(circle at 25% 30%, hsl(var(--h1) 55% 62% / 0.95), transparent 55%),
+    radial-gradient(circle at 80% 70%, hsl(var(--h2) 60% 45% / 0.9), transparent 60%),
+    conic-gradient(
+      from calc(var(--h1) * 1deg) at 60% 40%,
+      hsl(var(--h1) 40% 30%),
+      hsl(var(--h2) 45% 55%),
+      hsl(var(--h1) 40% 30%)
+    );
+  transition: transform 0.6s var(--sc-ease);
+}
+
+a.sc-morph-card:hover .sc-morph-art {
+  transform: scale(1.06);
+}
+
+.sc-morph-tag,
+.sc-morph-title,
+.sc-morph-excerpt {
+  padding: 0 1rem;
+}
+
+.sc-morph-tag {
+  font-family: var(--codeFont);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+}
+
+.sc-morph-title {
+  width: fit-content;
+  font-family: var(--headerFont);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--dark);
+}
+
+.sc-morph-excerpt {
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+/* the transition itself */
+::view-transition-group(sc-morph-title),
+::view-transition-group(sc-morph-card) {
+  animation-duration: 0.65s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+::view-transition-group(sc-morph-card) {
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+html.sc-morphing::view-transition-old(root) {
+  animation: sc-vt-out 0.35s ease both;
+}
+
+html.sc-morphing::view-transition-new(root) {
+  animation: sc-vt-in 0.55s 0.1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes sc-vt-out {
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+    filter: blur(4px);
+  }
+}
+
+@keyframes sc-vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}

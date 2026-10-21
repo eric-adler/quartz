@@ -19,17 +19,24 @@
 
 ## Architecture
 
-One local plugin, `plugins/showcase/`, wired in `quartz.config.yaml` as `source: ./plugins/showcase`.
-Plain ESM JavaScript, so no build step: Quartz imports it directly and it may import any package that
-Quartz itself depends on (`unist-util-visit`, `hastscript`, `preact`, …).
+Two local plugins, wired in `quartz.config.yaml`:
+
+- `plugins/showcase/` (transformer): build-time syntax plus small client scripts and styles, inlined
+  into every page but inert unless the page opts in. Plain ESM JavaScript, so no build step.
+- `plugins/showcase-assets/` (emitter): bundles the heavy client modules in `plugins/showcase/lazy/`
+  (WebGL effects, data views) into `static/showcase/*.js`, loaded only by the pages that use them, and
+  writes the semantic map's data.
 
 ```
 plugins/showcase/
   package.json          quartz manifest (category: transformer)
   index.js              transformer: markdown + html plugins, ships client JS/CSS
-  lib/                  build-time transforms (one file per feature)
-  client/               browser scripts (one file per feature), inlined at build
-  styles/               CSS (one file per feature), inlined at build
+  lib/                  build-time transforms (one file per feature) and shared modules
+  client/               small browser scripts, inlined
+  lazy/                 heavy browser modules, bundled separately and loaded on demand
+  styles/               CSS (one file per feature), inlined
+plugins/showcase-assets/
+  index.js              emitter: lazy bundles + semantic-map.json
 ```
 
 Build-time transforms check the page's `demo` flags and stamp them onto the article as
@@ -65,10 +72,10 @@ Status: ✅ built · 🔜 next phase · ⏳ later
 | 10  | Reactive document                        | `reactive`     | ✅ 3  |
 | 11  | Annotated case study                     | `case-study`   | ✅ 3  |
 | 17  | Read-aloud page                          | `read-aloud`   | ✅ 3  |
-| 6   | Shader showcase                          | `shaders`      | 🔜 4  |
-| 7   | 25 shader link hovers                    | `hover-lab`    | 🔜 4  |
-| 14  | Morphing page transitions                | `morph`        | 🔜 4  |
-| 13  | Semantic map                             | `semantic-map` | 🔜 4  |
+| 6   | Shader showcase                          | `shaders`      | ✅ 4  |
+| 7   | 25 shader link hovers                    | `hover-lab`    | ✅ 4  |
+| 14  | Morphing page transitions                | `morph`        | ✅ 4  |
+| 13  | Semantic map                             | `semantic-map` | ✅ 4  |
 
 ### 1 — Choose-your-own-depth
 
@@ -179,13 +186,16 @@ page into a cloze test. Results go to reader memory, so the graph can tell "seen
 
 ### 13 — Semantic map
 
-Build-time embeddings (local model, no API) → 2D projection → zoomable map of notes by meaning, with
-"related but unlinked" suggestions.
+Computed at build time from the notes' own words, with no model or API: TF-IDF → latent semantic
+analysis → t-SNE layout, k-means clusters labelled by their strongest words, and "related but
+unlinked" suggestions. Neural embeddings could replace the first two steps later without changing
+the page.
 
 ### 14 — Morphing page transitions
 
-View Transitions API on SPA navigation: the clicked link morphs into the next page's title. Falls back
-to a plain swap where unsupported.
+A gallery of cards (from a ` ```morph-gallery ` block); clicking one wraps Quartz's SPA navigation in
+the View Transitions API, so the card grows into the article and its title flies into the page
+title. Hover prefetches the page. Plain navigation where unsupported or with reduced motion.
 
 ### 15 — Puzzle-locked page
 

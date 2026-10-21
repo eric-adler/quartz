@@ -1,0 +1,114 @@
+/* Shader showcase: the canvas sits behind the page; the page floats on frosted glass above it. */
+.sc-shader-canvas {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+/* the theme paints the page wrappers; let the scene show through them */
+html.sc-shader-page body,
+html.sc-shader-page #quartz-root,
+html.sc-shader-page #quartz-body {
+  background: transparent !important;
+}
+
+html.sc-shader-page {
+  background: var(--light);
+}
+
+html.sc-shader-page #quartz-body .center {
+  margin-block: 2rem;
+  padding: 0 2rem 1.5rem;
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--light) 84%, transparent);
+  box-shadow: 0 30px 80px -40px rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+
+html.sc-shader-page #quartz-body .sidebar > * {
+  border-radius: 14px;
+}
+
+html.sc-shader-page #quartz-body .sidebar.left,
+html.sc-shader-page #quartz-body .sidebar.right {
+  background: color-mix(in srgb, var(--light) 70%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+html.sc-immersive #quartz-body {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+}
+
+.sc-shader-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 1.25rem 0;
+}
+
+html.sc-immersive .sc-shader-bar {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  margin: 0;
+  padding: 0.4rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--light) 80%, transparent);
+  box-shadow: 0 16px 40px -20px rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(12px);
+  transform: translateX(-50%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sc-shader-scenes {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 999px;
+  background: var(--light);
+}
+
+.sc-shader-bar button {
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  color: var(--dark);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.sc-shader-bar [aria-checked="true"],
+.sc-shader-bar [aria-pressed="true"] {
+  background: var(--secondary);
+  color: var(--light);
+}
+
+.sc-shader-immersive {
+  border: 1px solid var(--lightgray) !important;
+}
+
+.sc-shader-caption {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--darkgray);
+}
+
+html.sc-immersive .sc-shader-caption {
+  display: none;
+}

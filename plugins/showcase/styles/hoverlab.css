@@ -1,0 +1,99 @@
+/* Hover lab: a grid of effect cards; the WebGL overlay draws the hovered word. */
+.sc-fx-canvas {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+ol.sc-hoverlab {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr));
+  gap: 0.9rem;
+  margin: 1.5rem 0 2.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.sc-fx-card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 0.2rem;
+  min-height: 11rem;
+  margin: 0;
+  padding: 1rem 1.1rem 1.05rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 16px;
+  background:
+    radial-gradient(
+      circle at 80% 0%,
+      color-mix(in srgb, var(--secondary) 9%, transparent),
+      transparent 60%
+    ),
+    var(--light);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.sc-fx-card:hover,
+.sc-fx-card:focus-within {
+  border-color: color-mix(in srgb, var(--secondary) 45%, transparent);
+  box-shadow: 0 18px 40px -26px rgb(0 0 0 / 0.5);
+}
+
+.sc-fx-n {
+  font-family: var(--codeFont);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+}
+
+a.sc-fx-link {
+  align-self: center;
+  justify-self: start;
+  padding: 0.6rem 0;
+  background: none !important;
+  color: var(--dark) !important;
+  font-family: var(--headerFont);
+  font-size: clamp(1.8rem, 3vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-decoration: none !important;
+  white-space: nowrap;
+  outline: none;
+}
+
+a.sc-fx-link:focus-visible {
+  outline: 2px dashed color-mix(in srgb, var(--secondary) 50%, transparent);
+  outline-offset: 0.6rem;
+}
+
+/* the canvas has taken over drawing this word */
+a.sc-fx-link.sc-fx-live {
+  color: transparent !important;
+}
+
+.sc-fx-name {
+  font-family: var(--headerFont);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.sc-fx-technique {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--darkgray);
+}
+
+.sc-fx-nogl::before {
+  content: "This browser can't run WebGL2, so the effects can't be shown. The links still work.";
+  grid-column: 1 / -1;
+  font-size: 0.9rem;
+  color: var(--darkgray);
+}

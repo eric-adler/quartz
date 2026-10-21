@@ -63,6 +63,9 @@ plugins:
   - source: "./plugins/showcase"
     enabled: true
     order: 25
+  # Writes the showcase's lazily loaded scripts and the semantic map's data.
+  - source: "./plugins/showcase-assets"
+    enabled: true
   - source: "@quartz-community/obsidian-flavored-markdown"
     enabled: true
     options:

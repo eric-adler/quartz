@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto"
 import { visit } from "unist-util-visit"
 import { demoFlags, escapeHtml } from "./util.js"
+import { effectMeta } from "./fx-meta.js"
 
 /**
  * Fenced blocks that mount client widgets:
@@ -10,6 +11,10 @@ import { demoFlags, escapeHtml } from "./util.js"
  *   ```puzzle```         (flag: puzzle)        clues whose answers spell a password
  *   ```scrolly```        (flag: scrolly)       sticky figure for the `[!step]` callouts that follow;
  *                                              the block's content names the figure
+ *   ```hoverlab```       (flag: hover-lab)     effect cards, one per line: `effect-id | word | slug`
+ *   ```semantic-map```   (flag: semantic-map)  the garden laid out by meaning
+ *   ```shader-stage```   (flag: shaders)       controls for the page's background shaders
+ *   ```morph-gallery```  (flag: morph)         cards (one slug per line) that morph into their page
  *
  * Puzzle syntax: an optional `door: <slug>` line, then one clue per item, `clue | answer, alias`.
  * Only salted hashes of the answers are published.
@@ -18,6 +23,10 @@ const widgets = {
   "garden-graph": { flag: "memory-graph", render: () => mount("graph") },
   "garden-trail": { flag: "trail", render: () => mount("trail") },
   puzzle: { flag: "puzzle", render: renderPuzzle },
+  hoverlab: { flag: "hover-lab", render: renderHoverLab },
+  "semantic-map": { flag: "semantic-map", render: () => mount("semantic-map") },
+  "shader-stage": { flag: "shaders", render: () => mount("shader-stage") },
+  "morph-gallery": { flag: "morph", render: renderMorphGallery },
   scrolly: {
     flag: "scrolly",
     render: (source) => `<div class="sc-scrolly" data-figure="${escapeHtml(source.trim())}"></div>`,
@@ -82,4 +91,43 @@ function renderPuzzle(source, file) {
     `<div class="sc-puzzle" data-salt="${escapeHtml(salt)}" data-door="${escapeHtml(door)}">` +
     `<ol class="sc-clues">${items}</ol></div>`
   )
+}
+
+/** Relative URL from the current page to another slug, as Quartz writes its own links. */
+function relativeHref(from, to) {
+  const depth = from.split("/").length - 1
+  return `${"../".repeat(depth) || "./"}${to.replace(/(^|\/)index$/, "$1")}`
+}
+
+function renderHoverLab(source, file) {
+  const meta = new Map(effectMeta.map((fx) => [fx.id, fx]))
+  const cards = source
+    .split("\n")
+    .map((line) => line.split("|").map((part) => part.trim()))
+    .filter(([id, word]) => meta.has(id) && word)
+    .map(([id, word, slug], i) => {
+      const fx = meta.get(id)
+      const href = slug ? relativeHref(String(file.data.slug ?? ""), slug) : "#"
+      return (
+        `<li class="sc-fx-card" data-fx="${id}">` +
+        `<span class="sc-fx-n">${String(i + 1).padStart(2, "0")}</span>` +
+        `<a class="sc-fx-link" href="${escapeHtml(href)}" data-no-popover="true">${escapeHtml(word)}</a>` +
+        `<span class="sc-fx-name">${escapeHtml(fx.name)}</span>` +
+        `<span class="sc-fx-technique">${escapeHtml(fx.technique)}</span></li>`
+      )
+    })
+  return `<ol class="sc-hoverlab">${cards.join("")}</ol>`
+}
+
+function renderMorphGallery(source, file) {
+  const items = source
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((slug) => {
+      const label = slug.split("/").pop().replace(/-/g, " ")
+      const href = relativeHref(String(file.data.slug ?? ""), slug)
+      return `<li><a class="sc-morph-link" href="${escapeHtml(href)}" data-slug="${escapeHtml(slug)}">${escapeHtml(label)}</a></li>`
+    })
+  return `<ul class="sc-morph-gallery">${items.join("")}</ul>`
 }
