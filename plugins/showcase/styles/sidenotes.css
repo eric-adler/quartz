@@ -1,0 +1,136 @@
+/* Sidenotes & margin notes. Margin layout on wide screens, inline toggles below 1200px. */
+.sidenote {
+  display: none;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--darkgray);
+  text-align: left;
+}
+
+.sidenote-num {
+  margin-right: 0.35rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--secondary);
+}
+
+.sidenote-p {
+  display: block;
+}
+
+.sidenote-num + .sidenote-p {
+  display: inline;
+}
+
+article sup:has(> a[data-sidenote]),
+article sup > a[data-sidenote] {
+  line-height: 0;
+}
+
+.sidenote-p + .sidenote-p {
+  margin-top: 0.4rem;
+}
+
+article sup > a[data-sidenote] {
+  padding: 0 0.15rem;
+  border-radius: 4px;
+  background: none;
+  color: var(--secondary);
+  font-weight: 600;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+article sup > a[data-sidenote].sc-hl,
+article sup > a[data-sidenote][aria-expanded="true"] {
+  background: var(--secondary);
+  color: var(--light);
+}
+
+.sc-margin {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--darkgray);
+}
+
+.sc-margin > :first-child {
+  margin-top: 0;
+}
+
+.sc-margin > :last-child {
+  margin-bottom: 0;
+}
+
+.sc-margin p {
+  line-height: 1.5;
+}
+
+.sc-margin-title {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.sc-margin img {
+  margin: 0.25rem 0;
+}
+
+@keyframes sc-flash {
+  from {
+    background-color: color-mix(in srgb, var(--tertiary) 35%, transparent);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.sc-flash {
+  animation: sc-flash 1.4s var(--sc-ease);
+}
+
+@media (min-width: 1200px) {
+  body:has(#quartz-body .demo-flags[data-demo~="sidenotes"]) #quartz-body .sidebar.right {
+    visibility: hidden;
+  }
+
+  body:has(#quartz-body .demo-flags[data-demo~="sidenotes"]) article .footnotes {
+    display: none;
+  }
+
+  .sidenote,
+  .sc-margin {
+    display: block;
+    position: relative;
+    float: right;
+    clear: right;
+    width: 15.5rem;
+    margin: 0.2rem -18.5rem 1rem 0;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    transition:
+      color 0.2s,
+      background-color 0.2s;
+  }
+
+  .sidenote.sc-hl {
+    color: var(--dark);
+    background: color-mix(in srgb, var(--secondary) 12%, transparent);
+  }
+}
+
+@media (max-width: 1199px) {
+  .sidenote.open,
+  .sc-margin {
+    display: block;
+    margin: 0.6rem 0 0.9rem;
+    padding: 0.6rem 0.85rem;
+    border-left: 2px solid var(--secondary);
+    border-radius: 0 8px 8px 0;
+    background: color-mix(in srgb, var(--secondary) 9%, transparent);
+  }
+
+  .sidenote.open {
+    animation: sc-enter 0.4s var(--sc-ease);
+  }
+}

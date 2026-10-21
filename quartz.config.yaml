@@ -58,6 +58,11 @@ plugins:
         dark: github-dark
       keepBackground: false
     order: 20
+  # Demo-page features (content/demo/), see SHOWCASE_PLAN.md. Runs before obsidian-flavored-markdown
+  # so it can claim its own callout types.
+  - source: "./plugins/showcase"
+    enabled: true
+    order: 25
   - source: "@quartz-community/obsidian-flavored-markdown"
     enabled: true
     options:

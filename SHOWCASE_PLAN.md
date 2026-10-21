@@ -1,0 +1,229 @@
+# Quartz Showcase — Plan
+
+18 demo pages that show what a Quartz garden can do beyond stock features. Everything lives under
+`content/demo/`, the hub is `content/demo/index.md`.
+
+## Ground rules
+
+- **Scoped behaviour.** Every feature is opt-in per page via frontmatter (`demo: [concepts, sidenotes]`).
+  Nothing changes on pages without the flag. A later phase may promote features site-wide.
+- **Neutral placeholder content.** Demo pages and a supporting corpus of linked notes on one topic:
+  _coffee, from cherry to cup_ (`content/demo/coffee/`). Target ~30 notes; Phase 1 ships ~14.
+- **Static only.** The site deploys to GitHub Pages. No backend, no third-party data collection.
+  Anything "about the reader" lives in their own `localStorage`.
+- **Progressive enhancement.** Without JS, every page still reads as a normal article.
+- **SPA-safe.** Quartz swaps pages client-side. Every client script hooks `document`'s `nav` event and
+  registers teardown via `window.addCleanup`.
+- **Obsidian-friendly syntax.** Authoring stays plain Markdown: callouts, footnotes, wikilinks, fenced blocks.
+- **Motion respects `prefers-reduced-motion`**, colours use Quartz theme variables (light + dark).
+
+## Architecture
+
+One local plugin, `plugins/showcase/`, wired in `quartz.config.yaml` as `source: ./plugins/showcase`.
+Plain ESM JavaScript, so no build step: Quartz imports it directly and it may import any package that
+Quartz itself depends on (`unist-util-visit`, `hastscript`, `preact`, …).
+
+```
+plugins/showcase/
+  package.json          quartz manifest (category: transformer)
+  index.js              transformer: markdown + html plugins, ships client JS/CSS
+  lib/                  build-time transforms (one file per feature)
+  client/               browser scripts (one file per feature), inlined at build
+  styles/               CSS (one file per feature), inlined at build
+```
+
+Build-time transforms check the page's `demo` flags and stamp them onto the article as
+`<span class="demo-flags" data-demo="…">`. Client scripts and CSS key off that marker, so they are
+inert everywhere else.
+
+### Shared foundations
+
+| Foundation                 | What it is                                                                                                                                           | Used by                                                  |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| **Reader memory**          | `localStorage` store: per-page visit count, first/last seen, the ordered trail, per-page state (choices, quiz results). Records only `demo/` pages.  | 1, 3, 5, 12, 18                                          |
+| **Drawer**                 | Slide-in panel that fetches a note (same mechanism as Quartz popovers) and shows it without leaving the page. Has its own back-stack.                | 2, 8, 18                                                 |
+| **Callout & fence syntax** | Custom callout types (`[!checkpoint]`, `[!branch                                                                                                     | id]`, `[!margin]`) and fenced blocks (` ```telescope `). | 1, 4, 8, 10, 11, 16, 17 |
+| **WebGL stage**            | One full-viewport canvas shared by all effects on a page; effects register a draw function and a DOM target. Avoids the ~16-contexts-per-page limit. | 6, 7, 14                                                 |
+
+## The pages
+
+Status: ✅ built · 🔜 next phase · ⏳ later
+
+| #   | Page                                     | Flag              | Phase |
+| --- | ---------------------------------------- | ----------------- | ----- |
+| 1   | Choose-your-own-depth article            | `branching`       | ✅ 1  |
+| 2   | Dashed-underline concepts + drawer       | `concepts`        | ✅ 1  |
+| 8   | Sidenotes & margin notes                 | `sidenotes`       | ✅ 1  |
+| 16  | Telescopic text                          | `telescope`       | ✅ 1  |
+| 18  | T-profile navigation (deep + wide rails) | `tprofile`        | 🔜 2  |
+| 3   | Personal graph (frequency / recency)     | `memory-graph`    | 🔜 2  |
+| 5   | Your path through the garden             | `trail`           | 🔜 2  |
+| 12  | Flashcards from any note                 | `cards`           | 🔜 2  |
+| 15  | Puzzle-locked page                       | (encrypted-pages) | 🔜 2  |
+| 4   | YouTube annotations                      | `video-notes`     | ⏳ 3  |
+| 9   | Scrollytelling explainer                 | `scrolly`         | ⏳ 3  |
+| 10  | Reactive document                        | `reactive`        | ⏳ 3  |
+| 11  | Annotated case study                     | `case-study`      | ⏳ 3  |
+| 17  | Read-aloud page                          | `read-aloud`      | ⏳ 3  |
+| 6   | Shader showcase                          | `shaders`         | ⏳ 4  |
+| 7   | 25 shader link hovers                    | `hover-lab`       | ⏳ 4  |
+| 14  | Morphing page transitions                | `morph`           | ⏳ 4  |
+| 13  | Semantic map                             | `semantic-map`    | ⏳ 4  |
+
+### 1 — Choose-your-own-depth
+
+An argument that adapts to the reader. After a claim, a checkpoint asks whether it landed; the answer
+reveals supporting material inline, then the article continues.
+
+```md
+> [!checkpoint] Fresh beans beat expensive beans. Does that hold for you?
+>
+> - Makes sense, keep going
+> - Not convinced → evidence
+> - What counts as fresh? → fresh
+
+> [!branch|evidence]
+> Supporting argument, can contain its own checkpoints…
+```
+
+- Content after an unanswered checkpoint is held back (fade + "choose to continue"); a page-level
+  "show everything" switch removes all gating. No JS → everything visible.
+- Choices persist in reader memory; returning readers see their path and can reset it.
+- Done when: every branch is reachable, nesting works, reload restores the path.
+
+### 2 — Dashed-underline concepts
+
+Every internal link in the article becomes a concept: dashed underline, hover shows the target's
+one-line `description`, click opens the full note in the drawer. Links inside the drawer push onto the
+drawer's own stack (back button), the article never moves. Esc / click-outside closes.
+Mobile: tap shows the tooltip, second tap opens the drawer as a bottom sheet.
+
+### 3 — Personal graph
+
+Extends Quartz's graph idea with reader memory: node size = visit count, glow = recency,
+fade = not seen in a long time, unvisited = faint outline. A legend and "forget me" button.
+
+### 4 — YouTube annotations
+
+YouTube IFrame Player API, polling `getCurrentTime()` (~4 Hz). Annotations authored as a list:
+
+```md
+> [!video-notes] https://youtu.be/ID
+>
+> - 00:42 Note shown at 42 s
+> - 01:30–01:55 Note with an end time
+```
+
+Notes slide in beside the video, the list doubles as a clickable chapter index. Needs YouTube's embed,
+so a click-to-load consent placeholder is shown first.
+
+### 5 — Your path
+
+Renders the reader's own trail as a route map: start point, hops, revisits as loops, time spent,
+dead ends. Personal data only (no aggregate "where others go").
+
+### 6 — Shader showcase
+
+Living background on the WebGL stage: cursor- and scroll-reactive fields that read Quartz theme colours,
+pause when hidden, freeze on reduced motion. Several scenes with a switcher.
+
+### 7 — Hover lab: 25 shader link hovers
+
+Codrops-grade only, no plain CSS hovers. Link text is rasterised to a texture and drawn on the shared
+WebGL stage under the hovered link. Candidate list (subject to review):
+liquid ripple, velocity RGB smear, pixel-sort melt, ink bleed, Bayer dither dissolve, halftone morph,
+SDF inflate, magnetic particles, gooey metaballs, ember burn, glass lens, CRT roll, datamosh,
+bezier warp, spring-dangle letters, variable-font morph, fluid smoke, Voronoi shatter, ASCII-fy,
+elastic stretch, rope underline, metallic sheen, reaction–diffusion, focus pull, thin-film hologram.
+Each card names the technique in one line.
+
+### 8 — Sidenotes & margin notes
+
+On pages with the flag, footnotes become Tufte-style sidenotes in the right margin (right sidebar is
+hidden on that page). `> [!margin]` callouts become margin figures. Below 1200px the number toggles the
+note inline. Hovering a reference highlights its note and vice versa.
+
+### 9 — Scrollytelling explainer
+
+Sticky SVG figure that morphs between states as text steps scroll past (IntersectionObserver).
+Steps authored as `> [!step|state-id]` callouts.
+
+### 10 — Reactive document
+
+Tangle-style numbers inside prose: drag to change, dependent numbers recompute.
+
+```md
+A `[dose: 18 g | 12..22]` dose at a `[ratio: 1:16 | 14..18]` ratio gives `{dose * ratio} g` of coffee.
+```
+
+### 11 — Annotated case study
+
+Image with numbered pins (Figma-comment style) whose notes sit in the margin; before/after slider;
+decisions transclude linked notes.
+
+### 12 — Flashcards
+
+`==highlights==` on a flagged page become cloze cards. Quiz mode overlays the article; results go to
+reader memory so the graph can tell "seen" from "learned".
+
+### 13 — Semantic map
+
+Build-time embeddings (local model, no API) → 2D projection → zoomable map of notes by meaning, with
+"related but unlinked" suggestions.
+
+### 14 — Morphing page transitions
+
+View Transitions API on SPA navigation: the clicked link morphs into the next page's title. Falls back
+to a plain swap where unsupported.
+
+### 15 — Puzzle-locked page
+
+A riddle page; the answer is the password of a note encrypted by the existing `encrypted-pages` plugin.
+
+### 16 — Telescopic text
+
+Text that expands in place, phrase by phrase, plus a "detail" slider that expands everything to a depth.
+
+```telescope
+- I made {coffee}.
+  - coffee: a {pour-over} with {beans from Ethiopia}
+    - pour-over: slow pour-over through a paper filter
+    - beans from Ethiopia: washed Yirgacheffe beans, roasted light
+```
+
+Each `{phrase}` is expandable; a child line `phrase: replacement` defines what it becomes.
+
+### 17 — Read-aloud page
+
+Web Speech API. Word-level highlight via `boundary` events where the voice supports it, sentence-level
+fallback where it doesn't (e.g. Chrome's network voices). Play/pause, speed, click a paragraph to start
+there; skips code and math.
+
+### 18 — T-profile navigation
+
+Deep and wide, drawn as a literal T.
+
+- **Deep (vertical stem, left margin):** aarnphm-style section rail. One 3px bar per heading, width by
+  depth, staggered grow-in, in-view sections brighter, hover expands the rail and slides labels in,
+  click scrolls.
+- **Wide (horizontal bar, above the article):** the same visual language turned sideways, one bar per
+  related note. Score = outgoing + incoming links + shared tags + 2-hop neighbours; closest in the
+  middle, bar height = strength. Hover slides labels + reading time down with a preview card; visited
+  notes styled via reader memory; click navigates (the new page's T takes over). Optional `related:`
+  frontmatter pins or reorders.
+- Mobile: wide bar → swipeable chip strip; deep rail → "sections" button opening a bottom sheet.
+
+## Phases
+
+1. **Reading experience** — plugin skeleton, reader memory, drawer, callout/fence syntax, coffee
+   corpus (~14 notes), pages 1, 2, 8, 16, demo hub.
+2. **Navigation & memory** — 18, 3, 5, 12, 15; corpus to ~30 notes.
+3. **Rich media & explorables** — 4, 9, 10, 11, 17.
+4. **Visuals** — WebGL stage, 6, 7, 14, 13.
+
+## Verification per page
+
+- `npx quartz build --serve`, open the page in light and dark mode, desktop and ~400px wide.
+- Navigate away and back via SPA links: no duplicated listeners, no leaked DOM.
+- A non-demo page shows none of the behaviour.
+- Reduced-motion on: no gratuitous animation.

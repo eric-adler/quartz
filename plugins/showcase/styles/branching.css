@@ -1,0 +1,218 @@
+/* Choose-your-own-depth: checkpoints, branches and the reader's progress bar. */
+.sc-cyoa-bar {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  margin: 1rem 0 1.75rem;
+  padding: 0.45rem 0.5rem 0.45rem 1rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--light) 94%, transparent);
+  backdrop-filter: blur(10px);
+  font-size: 0.85rem;
+}
+
+.sc-cyoa-progress {
+  flex: 1;
+  min-width: 10rem;
+  color: var(--darkgray);
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--darkgray);
+}
+
+.sc-switch input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  width: 2.1rem;
+  height: 1.15rem;
+  margin: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--lightgray);
+  transform: none;
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+
+.sc-switch input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  left: 0.15rem;
+  width: 0.85rem;
+  height: 0.85rem;
+  border: none;
+  border-radius: 50%;
+  background: var(--light);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+  transform: none;
+  transition: translate 0.3s var(--sc-ease);
+}
+
+.sc-switch input[type="checkbox"]:checked {
+  background: var(--secondary);
+}
+
+.sc-switch input[type="checkbox"]:checked::after {
+  translate: 0.95rem 0;
+}
+
+.sc-cyoa-reset,
+.sc-choice {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 999px;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    opacity 0.25s,
+    transform 0.15s;
+}
+
+.sc-cyoa-reset {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--darkgray);
+}
+
+.sc-cyoa-reset:hover {
+  border-color: var(--gray);
+  color: var(--dark);
+}
+
+.sc-checkpoint {
+  position: relative;
+  margin: 2.25rem 0 1.5rem;
+  padding: 1.1rem 1.25rem 1.15rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--secondary) 7%, var(--light)),
+    var(--light) 70%
+  );
+}
+
+.sc-checkpoint::before {
+  content: "Checkpoint";
+  font-family: var(--codeFont);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+}
+
+.sc-checkpoint-q {
+  margin: 0.3rem 0 0.95rem;
+  font-family: var(--headerFont);
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--dark);
+}
+
+.sc-choices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sc-choice {
+  padding: 0.5rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--gray) 70%, transparent);
+  background: var(--light);
+  color: var(--dark);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.sc-choice:hover {
+  border-color: var(--secondary);
+  color: var(--secondary);
+}
+
+.sc-choice:active {
+  transform: scale(0.97);
+}
+
+.sc-choice[aria-pressed="true"] {
+  border-color: var(--secondary);
+  background: var(--secondary);
+  color: var(--light);
+}
+
+.sc-checkpoint.answered .sc-choice[aria-pressed="false"] {
+  opacity: 0.5;
+}
+
+.sc-checkpoint.answered .sc-choice[aria-pressed="false"]:hover {
+  opacity: 1;
+}
+
+.sc-skip {
+  margin-left: auto;
+  padding: 0.25rem;
+  border: none;
+  background: none;
+  color: var(--gray);
+  font: inherit;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.sc-skip:hover {
+  color: var(--darkgray);
+}
+
+.sc-checkpoint.answered .sc-skip {
+  display: none;
+}
+
+.sc-held {
+  display: none !important;
+}
+
+.sc-branch {
+  margin: 1.25rem 0 1.75rem;
+  padding: 0.1rem 0 0.1rem 1.25rem;
+  border-left: 2px solid var(--tertiary);
+}
+
+.sc-branch::before {
+  content: "Detour";
+  display: block;
+  margin-bottom: 0.2rem;
+  font-family: var(--codeFont);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+}
+
+.sc-branch[data-because]::before {
+  content: "Because you chose “" attr(data-because) "”";
+}
+
+.sc-branch-title {
+  font-family: var(--headerFont);
+  font-weight: 600;
+  color: var(--dark);
+}

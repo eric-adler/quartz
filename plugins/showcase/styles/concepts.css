@@ -1,0 +1,94 @@
+/* Concept links: dashed underline + dark tooltip with the note's core idea.
+   The ID-scoped :is() outranks themes that restyle internal links. */
+:is(#quartz-body article, body .sc-drawer) a.sc-concept.internal {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: var(--dark);
+  font-family: inherit;
+  font-weight: inherit;
+  text-decoration: underline dashed;
+  text-decoration-color: color-mix(in srgb, var(--secondary) 60%, transparent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.22em;
+  cursor: help;
+  transition:
+    color 0.2s,
+    text-decoration-color 0.2s;
+}
+
+:is(#quartz-body article, body .sc-drawer) a.sc-concept.internal:is(:hover, :focus-visible) {
+  color: var(--secondary);
+  text-decoration-color: var(--secondary);
+}
+
+.sc-tip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-width: min(21rem, calc(100vw - 24px));
+  padding: 0.75rem 0.95rem 0.7rem;
+  border-radius: var(--sc-radius);
+  background: var(--dark);
+  color: var(--light);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  box-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.55);
+  pointer-events: none;
+  opacity: 0;
+  translate: 0 5px;
+  transition:
+    opacity 0.18s,
+    translate 0.25s var(--sc-ease);
+}
+
+.sc-tip[data-side="below"] {
+  translate: 0 -5px;
+}
+
+.sc-tip.visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.sc-tip::after {
+  content: "";
+  position: absolute;
+  left: var(--arrow-x, 50%);
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  background: var(--dark);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.sc-tip[data-side="below"]::after {
+  top: -5px;
+  bottom: auto;
+}
+
+.sc-tip-title {
+  font-family: var(--headerFont);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--light) 65%, transparent);
+}
+
+.sc-tip-desc {
+  color: var(--light);
+}
+
+.sc-tip-desc:empty {
+  display: none;
+}
+
+.sc-tip-hint {
+  font-size: 0.74rem;
+  color: color-mix(in srgb, var(--light) 50%, transparent);
+}

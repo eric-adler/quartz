@@ -1,0 +1,35 @@
+/* Shared tokens and motion for the showcase demo pages. */
+:root {
+  --sc-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --sc-radius: 12px;
+}
+
+.demo-flags {
+  display: none !important;
+}
+
+@keyframes sc-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+.sc-enter {
+  animation: sc-enter 0.6s var(--sc-ease) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-enter,
+  .sc-tele-enter,
+  .sc-flash {
+    animation: none !important;
+  }
+}
