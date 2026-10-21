@@ -49,26 +49,26 @@ inert everywhere else.
 
 Status: ✅ built · 🔜 next phase · ⏳ later
 
-| #   | Page                                     | Flag              | Phase |
-| --- | ---------------------------------------- | ----------------- | ----- |
-| 1   | Choose-your-own-depth article            | `branching`       | ✅ 1  |
-| 2   | Dashed-underline concepts + drawer       | `concepts`        | ✅ 1  |
-| 8   | Sidenotes & margin notes                 | `sidenotes`       | ✅ 1  |
-| 16  | Telescopic text                          | `telescope`       | ✅ 1  |
-| 18  | T-profile navigation (deep + wide rails) | `tprofile`        | 🔜 2  |
-| 3   | Personal graph (frequency / recency)     | `memory-graph`    | 🔜 2  |
-| 5   | Your path through the garden             | `trail`           | 🔜 2  |
-| 12  | Flashcards from any note                 | `cards`           | 🔜 2  |
-| 15  | Puzzle-locked page                       | (encrypted-pages) | 🔜 2  |
-| 4   | YouTube annotations                      | `video-notes`     | ⏳ 3  |
-| 9   | Scrollytelling explainer                 | `scrolly`         | ⏳ 3  |
-| 10  | Reactive document                        | `reactive`        | ⏳ 3  |
-| 11  | Annotated case study                     | `case-study`      | ⏳ 3  |
-| 17  | Read-aloud page                          | `read-aloud`      | ⏳ 3  |
-| 6   | Shader showcase                          | `shaders`         | ⏳ 4  |
-| 7   | 25 shader link hovers                    | `hover-lab`       | ⏳ 4  |
-| 14  | Morphing page transitions                | `morph`           | ⏳ 4  |
-| 13  | Semantic map                             | `semantic-map`    | ⏳ 4  |
+| #   | Page                                     | Flag           | Phase |
+| --- | ---------------------------------------- | -------------- | ----- |
+| 1   | Choose-your-own-depth article            | `branching`    | ✅ 1  |
+| 2   | Dashed-underline concepts + drawer       | `concepts`     | ✅ 1  |
+| 8   | Sidenotes & margin notes                 | `sidenotes`    | ✅ 1  |
+| 16  | Telescopic text                          | `telescope`    | ✅ 1  |
+| 18  | T-profile navigation (deep + wide rails) | `tprofile`     | ✅ 2  |
+| 3   | Personal graph (frequency / recency)     | `memory-graph` | ✅ 2  |
+| 5   | Your path through the garden             | `trail`        | ✅ 2  |
+| 12  | Flashcards from any note                 | `cards`        | ✅ 2  |
+| 15  | Puzzle-locked page                       | `puzzle`       | ✅ 2  |
+| 4   | YouTube annotations                      | `video-notes`  | 🔜 3  |
+| 9   | Scrollytelling explainer                 | `scrolly`      | 🔜 3  |
+| 10  | Reactive document                        | `reactive`     | 🔜 3  |
+| 11  | Annotated case study                     | `case-study`   | 🔜 3  |
+| 17  | Read-aloud page                          | `read-aloud`   | 🔜 3  |
+| 6   | Shader showcase                          | `shaders`      | ⏳ 4  |
+| 7   | 25 shader link hovers                    | `hover-lab`    | ⏳ 4  |
+| 14  | Morphing page transitions                | `morph`        | ⏳ 4  |
+| 13  | Semantic map                             | `semantic-map` | ⏳ 4  |
 
 ### 1 — Choose-your-own-depth
 
@@ -163,8 +163,9 @@ decisions transclude linked notes.
 
 ### 12 — Flashcards
 
-`==highlights==` on a flagged page become cloze cards. Quiz mode overlays the article; results go to
-reader memory so the graph can tell "seen" from "learned".
+`==highlights==` on a flagged page become cloze cards. Quiz mode overlays the article (flip cards,
+grade Again / Hard / Good); a card counts as learned once answered Good. "Hide highlights" turns the
+page into a cloze test. Results go to reader memory, so the graph can tell "seen" from "learned".
 
 ### 13 — Semantic map
 
@@ -201,17 +202,18 @@ there; skips code and math.
 
 ### 18 — T-profile navigation
 
-Deep and wide, drawn as a literal T.
+Deep and wide, drawn as a literal T in the right margin (the right sidebar's usual widgets are hidden
+on this page).
 
-- **Deep (vertical stem, left margin):** aarnphm-style section rail. One 3px bar per heading, width by
-  depth, staggered grow-in, in-view sections brighter, hover expands the rail and slides labels in,
-  click scrolls.
-- **Wide (horizontal bar, above the article):** the same visual language turned sideways, one bar per
-  related note. Score = outgoing + incoming links + shared tags + 2-hop neighbours; closest in the
-  middle, bar height = strength. Hover slides labels + reading time down with a preview card; visited
-  notes styled via reader memory; click navigates (the new page's T takes over). Optional `related:`
-  frontmatter pins or reorders.
-- Mobile: wide bar → swipeable chip strip; deep rail → "sections" button opening a bottom sheet.
+- **Wide (the crossbar):** one bar per related note. Score = outgoing + incoming links (3 each) +
+  shared tags (weighted by rarity) + two-step paths (0.8 each), computed in the browser from Quartz's
+  content index. Closest notes sit next to the centre dot (this page), bar height = strength, visited
+  notes are coloured. Hover shows a card with the reason, reading time and when you last visited;
+  click navigates and the new page's T takes over.
+- **Deep (the stem):** aarnphm-style section rail hanging from the centre. One bar per heading, width by
+  depth, staggered grow-in, sections on screen brighter, the one being read in the accent colour.
+  Hover slides the headings in from the left; click scrolls.
+- Below 1200px: a floating dock with **Sections** and **Related** buttons, each opening a sheet.
 
 ## Phases
 

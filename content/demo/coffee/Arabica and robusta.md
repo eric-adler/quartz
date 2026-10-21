@@ -3,6 +3,7 @@ title: "Arabica and robusta"
 description: "The two species behind nearly all coffee: arabica for sweetness and acidity, robusta for body, bitterness and caffeine."
 tags:
   - coffee
+  - beans
 ---
 
 **Arabica** (_Coffea arabica_) grows high and slowly and is fussy about climate. It makes up most speciality coffee.

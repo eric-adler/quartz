@@ -1,0 +1,373 @@
+/* Flashcards: deck bar, cloze reading mode and the quiz overlay. */
+.sc-deck {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  margin: 1rem 0 1.5rem;
+  padding: 0.65rem 0.75rem 0.65rem 1.1rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--tertiary) 12%, var(--light)),
+    var(--light) 70%
+  );
+}
+
+.sc-deck-info {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 13rem;
+  font-size: 0.9rem;
+}
+
+.sc-deck-info strong {
+  color: var(--dark);
+}
+
+.sc-deck-meter {
+  flex: 0 1 7rem;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--lightgray);
+}
+
+.sc-deck-meter > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--tertiary);
+  transition: width 0.6s var(--sc-ease);
+}
+
+.sc-deck-learned {
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--darkgray);
+}
+
+.sc-deck-start,
+.sc-quiz-foot button,
+.sc-quiz-summary button {
+  padding: 0.5rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    filter 0.2s,
+    background-color 0.2s;
+}
+
+.sc-deck-start {
+  background: var(--secondary);
+  color: var(--light);
+}
+
+.sc-deck-start:hover {
+  filter: brightness(1.1);
+}
+
+.sc-deck-start:active,
+.sc-quiz-foot button:active {
+  transform: scale(0.97);
+}
+
+/* reading mode: highlights become blanks */
+.sc-cloze .text-highlight {
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--secondary) 18%, transparent) !important;
+  color: transparent !important;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    color 0.35s,
+    background-color 0.35s;
+}
+
+.sc-cloze .text-highlight :is(*) {
+  color: transparent !important;
+}
+
+.sc-cloze .text-highlight:hover {
+  background: color-mix(in srgb, var(--secondary) 30%, transparent) !important;
+}
+
+.sc-cloze .text-highlight.revealed,
+.sc-cloze .text-highlight.revealed * {
+  color: inherit !important;
+  cursor: default;
+  user-select: text;
+}
+
+.sc-cloze .text-highlight.revealed {
+  background: color-mix(in srgb, var(--tertiary) 28%, transparent) !important;
+}
+
+/* quiz */
+html.sc-quiz-open {
+  overflow: hidden;
+}
+
+.sc-quiz {
+  position: fixed;
+  z-index: 1100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--dark) 45%, transparent);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.sc-quiz.open {
+  opacity: 1;
+}
+
+.sc-quiz-panel {
+  width: min(40rem, 100%);
+  padding: 1rem 1.25rem 1.25rem;
+  border-radius: 20px;
+  background: var(--light);
+  box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.55);
+  outline: none;
+  transform: translateY(14px) scale(0.98);
+  transition: transform 0.4s var(--sc-ease);
+}
+
+.sc-quiz.open .sc-quiz-panel {
+  transform: none;
+}
+
+.sc-quiz-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sc-quiz-count {
+  min-width: 3.5rem;
+  font-family: var(--codeFont);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--gray);
+}
+
+.sc-quiz-progress {
+  flex: 1;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--lightgray);
+}
+
+.sc-quiz-progress > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--secondary);
+  transition: width 0.4s var(--sc-ease);
+}
+
+.sc-quiz-close {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--darkgray);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sc-quiz-close:hover {
+  background: color-mix(in srgb, var(--darkgray) 10%, transparent);
+}
+
+.sc-card {
+  margin: 1.25rem 0;
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+.sc-card.enter {
+  animation: sc-card-in 0.45s var(--sc-ease);
+}
+
+@keyframes sc-card-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px) rotate(1deg);
+  }
+}
+
+.sc-card-inner {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.65s var(--sc-ease);
+}
+
+.sc-card.flipped .sc-card-inner {
+  transform: rotateY(180deg);
+}
+
+.sc-card-face {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  min-height: 9rem;
+  padding: 1.5rem 1.6rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 14px;
+  background: var(--light);
+  color: var(--dark);
+  font-size: 1.15rem;
+  line-height: 1.65;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.sc-card-face.back {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--tertiary) 12%, var(--light)),
+    var(--light)
+  );
+  transform: rotateY(180deg);
+}
+
+.sc-card-text,
+.sc-card-text p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.sc-blank {
+  display: inline-block;
+  width: var(--len);
+  max-width: 100%;
+  height: 1.1em;
+  vertical-align: -0.15em;
+  border-bottom: 2px solid var(--secondary);
+  border-radius: 4px 4px 0 0;
+  background: color-mix(in srgb, var(--secondary) 12%, transparent);
+}
+
+.sc-answer {
+  padding: 0 0.15em;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--secondary) 14%, transparent);
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+.sc-quiz-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.sc-quiz .sc-reveal,
+.sc-quiz .primary {
+  background: var(--secondary);
+  color: var(--light);
+}
+
+.sc-quiz .sc-reveal[hidden],
+.sc-grades[hidden] {
+  display: none;
+}
+
+.sc-grades {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.sc-quiz [data-grade] {
+  border-color: var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+}
+
+.sc-quiz [data-grade="0"]:hover {
+  border-color: #c4554a;
+  color: #c4554a;
+}
+
+.sc-quiz [data-grade="1"]:hover {
+  border-color: #c98f2a;
+  color: #c98f2a;
+}
+
+.sc-quiz [data-grade="2"] {
+  border-color: var(--tertiary);
+  background: var(--tertiary);
+  color: var(--light);
+}
+
+.sc-quiz .sc-again-all {
+  border-color: var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+}
+
+.sc-quiz kbd {
+  margin-left: 0.35rem;
+  padding: 0.02rem 0.3rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-family: var(--codeFont);
+  font-size: 0.68rem;
+  opacity: 0.6;
+}
+
+.sc-quiz-summary {
+  padding: 2rem 1rem 1.5rem;
+  text-align: center;
+}
+
+.sc-quiz-summary p {
+  margin: 0.25rem 0;
+  color: var(--darkgray);
+}
+
+.sc-quiz-summary .big {
+  font-family: var(--headerFont);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-card-inner {
+    transition: none;
+  }
+
+  .sc-card.enter {
+    animation: none;
+  }
+}
+
+/* other cards' answers on the same sentence stay unmarked, so they don't give each other away */
+.sc-card-text .text-highlight {
+  padding: 0;
+  background: none;
+  color: inherit;
+}

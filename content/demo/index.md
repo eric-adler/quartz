@@ -14,13 +14,13 @@ Each experiment is switched on per page, so the rest of the site stays ordinary.
 - [[sidenotes|Sidenotes]]: footnotes in the margin, next to the sentence they belong to.
 - [[telescopic-text|Telescopic text]]: sentences that unfold in place, phrase by phrase.
 
-## Coming next
+## Navigation that remembers
 
-- **T-profile navigation**: a deep rail through the page's sections and a wide rail across related notes, forming a T.
-- **Personal graph**: the garden's graph sized and lit by your own visits.
-- **Your path**: a map of the route you took through the garden.
-- **Flashcards**: any note becomes a quiz.
-- **Puzzle lock**: a riddle whose answer unlocks a hidden page.
+- [[t-profile|T-profile navigation]]: a deep rail through the page's sections and a wide bar across related notes, forming a T.
+- [[personal-graph|Your garden]]: the garden's graph, sized and lit by your own visits.
+- [[your-path|Your path]]: a map of the route you took through the garden.
+- [[flashcards|Flashcards]]: any note's highlights become a quiz.
+- [[puzzle-lock|The barista's lock]]: four clues spell the password to a hidden page.
 
 ## Later
 

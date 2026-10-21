@@ -3,6 +3,7 @@ title: "Freshness"
 description: "Roasted coffee peaks roughly one to four weeks after roasting. After that, aromatics fade and it tastes flat."
 tags:
   - coffee
+  - beans
 ---
 
 Fresh beans are full of carbon dioxide from roasting. For the first days that gas gets in the way of brewing, which is why baristas let beans rest and why a [[Bloom]] matters. After a few weeks, oxidation dulls the aroma.

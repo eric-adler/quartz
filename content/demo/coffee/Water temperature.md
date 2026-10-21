@@ -3,6 +3,7 @@ title: "Water temperature"
 description: "Hotter water extracts faster. Most brewing happens between 90 and 96 °C."
 tags:
   - coffee
+  - brewing
 ---
 
 Heat speeds up dissolving, so temperature is a gentler version of the [[Grind size]] dial.

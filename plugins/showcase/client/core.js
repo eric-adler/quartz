@@ -46,6 +46,8 @@ function writeMemory(memory) {
 }
 
 sc.memory = {
+  /** Full snapshot: `{ visits, trail, state }`. */
+  all: () => readMemory(),
   visits: () => readMemory().visits,
   trail: () => readMemory().trail,
   get(slug, key) {
@@ -61,6 +63,37 @@ sc.memory = {
       localStorage.removeItem(MEMORY_KEY)
     } catch {}
   },
+}
+
+// Content index: Quartz's own `fetchData` promise (slug → { title, links, tags, content }).
+sc.index = async () => {
+  const data = await (typeof fetchData !== "undefined" ? fetchData : Promise.resolve({}))
+  return data?.content && typeof data.content === "object" ? data.content : (data ?? {})
+}
+
+/** Normalises a link target from the index: folder links ("demo/coffee/") point at their index. */
+sc.canonicalSlug = (slug) => {
+  const bare = slug.split("#")[0]
+  return bare === "" || bare.endsWith("/") ? `${bare}index` : bare
+}
+
+/** URL path for a slug, resolved from the current page so it works under any base path. */
+sc.href = (slug) => {
+  const depth = sc.slug().split("/").length - 1
+  const root = new URL("../".repeat(depth) || "./", location.href)
+  return new URL(slug.replace(/(^|\/)index$/, "$1"), root).pathname
+}
+
+sc.readingMinutes = (text = "") => Math.max(1, Math.round((text.match(/\S+/g)?.length ?? 0) / 230))
+
+sc.timeAgo = (t) => {
+  const minutes = Math.round((Date.now() - t) / 60_000)
+  if (minutes < 1) return "just now"
+  if (minutes < 60) return `${minutes} min ago`
+  const hours = Math.round(minutes / 60)
+  if (hours < 24) return `${hours} h ago`
+  const days = Math.round(hours / 24)
+  return days === 1 ? "yesterday" : `${days} days ago`
 }
 
 // Only demo pages are remembered.

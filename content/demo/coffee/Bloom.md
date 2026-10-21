@@ -3,6 +3,7 @@ title: "Bloom"
 description: "Pouring a little water first lets trapped CO₂ escape so the rest of the brew can extract evenly."
 tags:
   - coffee
+  - brewing
 ---
 
 When hot water hits fresh grounds, they puff up and bubble: carbon dioxide leaving. If you pour all the water at once, that gas pushes water away and parts of the bed barely brew.

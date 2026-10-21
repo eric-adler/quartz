@@ -3,6 +3,7 @@ title: "Processing methods"
 description: "How the fruit is removed from the seed after harvest (washed, natural or honey) changes flavour as much as origin does."
 tags:
   - coffee
+  - beans
 ---
 
 A coffee bean is the seed of a cherry. After picking, the fruit has to come off.

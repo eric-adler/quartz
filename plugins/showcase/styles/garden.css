@@ -1,0 +1,444 @@
+/* Garden maps: personal graph and your path share one SVG layout. */
+.sc-mount {
+  margin: 1.5rem 0 2rem;
+}
+
+.sc-garden {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--lightgray);
+  border-radius: 18px;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    color-mix(in srgb, var(--secondary) 7%, var(--light)),
+    var(--light) 72%
+  );
+  overflow: hidden;
+}
+
+.sc-garden-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.sc-edges line {
+  stroke: color-mix(in srgb, var(--gray) 55%, transparent);
+  stroke-width: 1;
+  transition:
+    stroke 0.25s,
+    opacity 0.25s;
+}
+
+.sc-garden-svg.sc-focus .sc-edges line {
+  opacity: 0.3;
+}
+
+.sc-edges line.hot {
+  stroke: var(--secondary);
+  stroke-width: 1.5;
+  opacity: 1 !important;
+}
+
+.sc-node {
+  cursor: pointer;
+  outline: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sc-pop 0.6s var(--sc-ease) both;
+  animation-delay: calc(var(--i) * 18ms);
+  transition: opacity 0.25s;
+}
+
+@keyframes sc-pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.sc-hit {
+  fill: transparent;
+}
+
+.sc-dot {
+  transition:
+    fill 0.25s,
+    stroke 0.25s;
+}
+
+.sc-node.visited .sc-dot {
+  fill: var(--secondary);
+}
+
+.sc-node.visited.stale .sc-dot {
+  fill: var(--gray);
+}
+
+.sc-node.unvisited .sc-dot {
+  fill: var(--light);
+  stroke: var(--gray);
+  stroke-width: 1.2;
+}
+
+.sc-node:focus-visible .sc-dot {
+  stroke: var(--tertiary);
+  stroke-width: 3;
+}
+
+.sc-garden-svg.sc-focus .sc-node:not(.hot) {
+  opacity: 0.3;
+}
+
+.sc-label {
+  font-family: var(--bodyFont);
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--dark);
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: var(--light);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.sc-label.always {
+  opacity: 0.8;
+}
+
+.sc-node:is(:hover, :focus-visible, .hot) .sc-label {
+  opacity: 1;
+}
+
+.sc-glow {
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sc-glow.fresh {
+  animation: sc-breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes sc-breathe {
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.sc-learned {
+  fill: none;
+  stroke: var(--tertiary);
+  stroke-width: 1.75;
+  stroke-dasharray: 3 3;
+  pointer-events: none;
+}
+
+.sc-garden-tip {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  background: var(--dark);
+  color: var(--light);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  transform: translate(-50%, calc(-100% - 18px));
+  pointer-events: none;
+  box-shadow: 0 12px 30px -12px rgb(0 0 0 / 0.5);
+}
+
+.sc-garden-tip span {
+  opacity: 0.75;
+}
+
+.sc-garden-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  margin: 1.1rem 0;
+}
+
+.sc-garden-stats dl,
+dl.sc-garden-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  margin: 0;
+}
+
+.sc-garden-stats dt {
+  font-family: var(--codeFont);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.sc-garden-stats dd {
+  margin: 0.15rem 0 0;
+  font-family: var(--headerFont);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.sc-garden-stats dd small {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--gray);
+}
+
+.sc-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+  color: var(--darkgray);
+}
+
+.sc-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.sw {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.sw.size {
+  width: 15px;
+  height: 15px;
+  background: var(--secondary);
+}
+
+.sw.glow {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(
+    color-mix(in srgb, var(--secondary) 60%, transparent),
+    transparent 70%
+  );
+}
+
+.sw.stale {
+  background: var(--gray);
+}
+
+.sw.unvisited {
+  border: 1.2px solid var(--gray);
+}
+
+.sw.learned {
+  border: 1.5px dashed var(--tertiary);
+}
+
+.sc-forget,
+.sc-replay {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 999px;
+  background: var(--light);
+  color: var(--darkgray);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.sc-forget {
+  margin-left: auto;
+}
+
+.sc-forget:hover,
+.sc-replay:hover {
+  border-color: var(--gray);
+  color: var(--dark);
+}
+
+.sc-forget[data-confirm="yes"] {
+  border-color: #c4554a;
+  color: #c4554a;
+}
+
+.sc-replay {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+}
+
+/* your path */
+.sc-trail-map .sc-edges line {
+  opacity: 0.45;
+}
+
+.sc-node.on-route .sc-dot {
+  fill: var(--light);
+  stroke: var(--secondary);
+  stroke-width: 2;
+}
+
+.sc-route {
+  fill: none;
+  stroke: var(--secondary);
+  stroke-width: calc(1.25px + var(--age) * 2.5px);
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: calc(0.2 + var(--age) * 0.8);
+  pointer-events: none;
+}
+
+.sc-play .sc-route {
+  animation: sc-draw 0.45s var(--sc-ease) forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes sc-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.sc-start {
+  fill: none;
+  stroke: var(--tertiary);
+  stroke-width: 2.5;
+}
+
+.sc-here {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sc-play .sc-here {
+  animation: sc-fade-in 0.4s forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes sc-fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+.sc-here-dot {
+  fill: var(--secondary);
+  stroke: var(--light);
+  stroke-width: 3;
+}
+
+.sc-here-pulse {
+  fill: var(--secondary);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sc-pulse 2s ease-out infinite;
+}
+
+@keyframes sc-pulse {
+  from {
+    transform: scale(0.6);
+    opacity: 0.45;
+  }
+  to {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.sc-timeline h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.sc-timeline ol {
+  margin: 0 0 1rem 0.4rem;
+  padding: 0;
+  list-style: none;
+  border-left: 2px solid var(--lightgray);
+}
+
+.sc-timeline li {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.3rem 0 0.3rem 1.1rem;
+}
+
+.sc-timeline li::before {
+  content: "";
+  position: absolute;
+  top: 0.75rem;
+  left: -7px;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--secondary);
+  border-radius: 50%;
+  background: var(--light);
+}
+
+.sc-timeline li:last-child::before {
+  background: var(--secondary);
+}
+
+.sc-stop-meta {
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--gray);
+}
+
+.sc-trail-empty {
+  padding: 2.5rem 1.5rem;
+  border: 1px dashed var(--gray);
+  border-radius: 18px;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-node,
+  .sc-glow.fresh,
+  .sc-here-pulse {
+    animation: none;
+  }
+
+  .sc-route {
+    stroke-dashoffset: 0;
+    animation: none !important;
+  }
+
+  .sc-here {
+    opacity: 1;
+    animation: none !important;
+  }
+}
+
+.sc-timeline li > a {
+  background: none;
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.sc-timeline li > a:hover {
+  color: var(--secondary);
+}

@@ -1,0 +1,228 @@
+/* Puzzle lock: a padlock whose letters are the clue answers' initials. */
+.sc-puzzle {
+  margin: 1.5rem 0 2rem;
+}
+
+.sc-lock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin: 1rem auto 2rem;
+}
+
+.sc-lock-shackle {
+  width: 7rem;
+  height: 4.5rem;
+  margin-bottom: -4px;
+  border: 12px solid color-mix(in srgb, var(--darkgray) 75%, transparent);
+  border-bottom: none;
+  border-radius: 4.5rem 4.5rem 0 0;
+  transition:
+    transform 0.8s var(--sc-ease),
+    border-color 0.5s;
+}
+
+.sc-lock.open .sc-lock-shackle {
+  border-color: var(--tertiary);
+  transform: translateY(-20px);
+}
+
+.sc-lock-body {
+  min-width: 16rem;
+  padding: 1.1rem 1.25rem 1rem;
+  border-radius: 18px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--secondary) 35%, #1b1b1f), #141417);
+  color: #f2f2f2;
+  text-align: center;
+  box-shadow: 0 24px 50px -24px rgb(0 0 0 / 0.6);
+}
+
+.sc-lock.opening .sc-lock-body {
+  animation: sc-unlock 1.3s ease-out;
+}
+
+@keyframes sc-unlock {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--tertiary) 70%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 22px transparent;
+  }
+}
+
+.sc-lock-slots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  perspective: 400px;
+}
+
+.sc-slot {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 3.2rem;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.07);
+  font-family: var(--headerFont);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.sc-slot.filled {
+  border-color: var(--tertiary);
+  background: color-mix(in srgb, var(--tertiary) 35%, transparent);
+}
+
+.sc-slot.flip {
+  animation: sc-slot-flip 0.6s var(--sc-ease);
+}
+
+@keyframes sc-slot-flip {
+  from {
+    transform: rotateX(-90deg);
+  }
+}
+
+.sc-lock-status {
+  margin: 0.75rem 0 0;
+  font-family: var(--codeFont);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.65);
+}
+
+.sc-lock.open .sc-lock-status {
+  color: var(--tertiary);
+}
+
+.sc-door {
+  display: inline-block;
+  margin-top: 0.85rem;
+  padding: 0.5rem 1.15rem;
+  border-radius: 999px;
+  background: var(--tertiary) !important;
+  color: #111 !important;
+  font-weight: 700;
+}
+
+.sc-door[hidden] {
+  display: none;
+}
+
+ol.sc-clues {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sc-clue {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.5rem 0.85rem;
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 14px;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
+}
+
+.sc-clue-n {
+  display: grid;
+  grid-row: span 2;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--lightgray);
+  font-family: var(--headerFont);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dark);
+  transition: background-color 0.3s;
+}
+
+.sc-clue.solved {
+  border-color: color-mix(in srgb, var(--tertiary) 60%, transparent);
+  background: color-mix(in srgb, var(--tertiary) 8%, transparent);
+}
+
+.sc-clue.solved .sc-clue-n {
+  background: var(--tertiary);
+  color: var(--light);
+}
+
+.sc-clue-text {
+  margin: 0;
+  color: var(--dark);
+}
+
+.sc-clue-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sc-clue-form input {
+  flex: 1 1 10rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  background: var(--light);
+  color: var(--dark);
+  font: inherit;
+}
+
+.sc-clue-form input:focus {
+  outline: 2px solid var(--secondary);
+  outline-offset: 1px;
+}
+
+.sc-clue-form button {
+  padding: 0.4rem 0.95rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--secondary);
+  color: var(--light);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sc-clue-form button:disabled {
+  display: none;
+}
+
+.sc-clue-feedback {
+  font-size: 0.8rem;
+  color: var(--gray);
+}
+
+.sc-clue.solved .sc-clue-feedback {
+  color: var(--tertiary);
+  font-weight: 600;
+}
+
+.sc-clue.shake {
+  animation: sc-shake 0.4s;
+}
+
+@keyframes sc-shake {
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}

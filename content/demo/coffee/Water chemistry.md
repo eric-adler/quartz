@@ -3,6 +3,7 @@ title: "Water chemistry"
 description: "A cup is about 98% water, and the minerals in it decide what gets extracted and how the acidity tastes."
 tags:
   - coffee
+  - brewing
 ---
 
 Magnesium and calcium help pull flavour out of the grounds. Bicarbonate _buffers_ acidity: a little rounds off sharp edges, too much makes the cup flat and chalky.

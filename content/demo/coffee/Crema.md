@@ -3,6 +3,7 @@ title: "Crema"
 description: "The foam on top of espresso: CO₂ emulsified with coffee oils. A sign of freshness, not of quality."
 tags:
   - coffee
+  - taste
 ---
 
 Pressure forces carbon dioxide into the liquid; when the shot leaves the machine the gas comes out as fine bubbles held together by oils.

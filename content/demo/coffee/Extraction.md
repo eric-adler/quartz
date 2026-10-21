@@ -3,9 +3,10 @@ title: "Extraction"
 description: "Brewing is dissolving: water pulls flavour out of ground coffee, and how much it pulls decides whether a cup tastes sour, sweet or bitter."
 tags:
   - coffee
+  - brewing
 ---
 
-Ground coffee is about 30% soluble. Brewing dissolves part of that into water, and the order matters: bright **acids** dissolve first, then **sugars** and the heavier browning compounds, and the **bitter** compounds come last.
+Ground coffee is about 30% soluble. Brewing dissolves part of that into water, and the order matters: bright **acids** dissolve first ([[Acidity]]), then **sugars** ([[Sweetness]]) and the heavier browning compounds, and the **bitter** compounds come last.
 
 - **Under-extracted:** too little dissolved. Sour, thin, sometimes salty.
 - **Over-extracted:** too much dissolved. Bitter, drying, hollow.

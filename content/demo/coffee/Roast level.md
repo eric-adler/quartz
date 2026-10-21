@@ -3,6 +3,7 @@ title: "Roast level"
 description: "Roasting turns a grassy green seed into coffee. Lighter roasts keep origin character; darker roasts trade it for roast flavour and bitterness."
 tags:
   - coffee
+  - beans
 ---
 
 In the roaster, sugars caramelise and the Maillard reaction builds hundreds of aroma compounds. Around 196 °C the beans audibly crack as steam escapes: _first crack_.
